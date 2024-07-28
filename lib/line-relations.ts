@@ -30,3 +30,25 @@ export function genRange(from: number, sign: boolean, to = 100) {
 		.fill(from)
 		.map((n, i) => (sign ? 0 : -(to + from)) + n + i);
 }
+
+export type ExplainedRelation = Map<number, Map<number, number[]>>;
+
+export default function explainRelation(relationCollection: RelationCollection) {
+	const explainedCollection: ExplainedRelation = new Map();
+	const lines = Reflect.ownKeys(relationCollection).map(key => parseInt(key.toString()));
+	const lineNumber = lines.length + 1;
+	lines.forEach(line => {
+		const relation = relationCollection[line];
+		const relationMap = new Map<number, number[]>();
+		relation.a.forEach(typeALine => relationMap.set(typeALine, []));
+		relation.b.forEach(typeBLine => relationMap.set(typeBLine, [0]));
+		Reflect.ownKeys(relation.c).forEach(key => {
+			const typeCLine = parseInt(key.toString());
+			relationMap.set(typeCLine, relation.c[typeCLine]);
+		});
+		if (relationMap.size < lineNumber - line) throw Error(`统计共有 ${lineNumber} 根电线，其中 ${line} 号电线所给位置数据不全`);
+		if (relationMap.size > lineNumber - line) throw Error(`统计共有 ${lineNumber} 根电线，其中 ${line} 号电线所给位置数据过多`);
+		explainedCollection.set(line, relationMap);
+	});
+	return explainedCollection;
+}

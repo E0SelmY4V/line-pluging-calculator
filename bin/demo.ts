@@ -1,4 +1,5 @@
-import { genRange, RelationCollection } from '../lib/line-relations';
+import Calculator from '../lib/calculator';
+import explainRelation, { genRange, RelationCollection } from '../lib/line-relations';
 
 const collection = {
 	1: {
@@ -221,10 +222,10 @@ const collection = {
 		},
 	},
 	18: {
-		a: [],
+		a: [23, 24, 25, 26],
 		b: [],
 		c: {
-			19: [0, 1, 2, 23, 24, 25, 26],
+			19: [0, 1, 2],
 			20: [0, 1],
 			21: [-1, 0],
 			22: [...genRange(-3, false), -2],
@@ -297,4 +298,52 @@ const collection = {
 	},
 } satisfies RelationCollection;
 
-export default collection;
+const simpleCollection = {
+	1: {
+		a: [2, 3, 4, 5, 7, 8],
+		b: [],
+		c: { 6: [...genRange(-1, false), 0] },
+	},
+	2: {
+		a: [3, 4, 5, 8],
+		b: [],
+		c: {
+			6: [...genRange(-1, false), 0],
+			7: [...genRange(-1, false), 0],
+		},
+	},
+	3: {
+		a: [4, 5, 6],
+		b: [],
+		c: {
+			8: [...genRange(-1, false), 0],
+			7: [...genRange(-1, false), 0],
+		},
+	},
+	4: {
+		a: [6, 7],
+		b: [],
+		c: {
+			8: [...genRange(-1, false), 0],
+			5: [0, ...genRange(1, false)],
+		},
+	},
+	5: {
+		a: [6, 7],
+		b: [],
+		c: { 8: [...genRange(-1, false), 0] },
+	},
+	6: {
+		a: [7, 8],
+		b: [],
+		c: {},
+	},
+	7: {
+		a: [8],
+		b: [],
+		c: {},
+	},
+} satisfies RelationCollection;
+
+const calculator = new Calculator(explainRelation(simpleCollection));
+console.log(calculator.resultSet, calculator.minHeight);

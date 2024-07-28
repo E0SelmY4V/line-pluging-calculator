@@ -10,6 +10,7 @@
 		"url": "git+https://github.com/E0SelmY4V/line-pluging-calculator"
 	},
 	"scripts": {
+		"demo": "ts-node bin/demo",
 		"prepare": "husky",
 		"fmt": "eslint . --fix",
 		"lint": "eslint .",
