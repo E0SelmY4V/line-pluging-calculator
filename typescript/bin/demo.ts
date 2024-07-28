@@ -1,5 +1,5 @@
 import Calculator from '../lib/calculator';
-import explainRelation, { genRange, RelationCollection } from '../lib/line-relations';
+import explainRelation, { genRange, mapRelationToJson, RelationCollection } from '../lib/line-relations';
 
 const collection = {
 	1: {
@@ -345,5 +345,4 @@ const simpleCollection = {
 	},
 } satisfies RelationCollection;
 
-const calculator = new Calculator(explainRelation(simpleCollection));
-console.log(calculator.resultSet, calculator.minHeight);
+console.log(mapRelationToJson(explainRelation(collection)));

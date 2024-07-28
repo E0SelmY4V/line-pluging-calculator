@@ -52,3 +52,19 @@ export default function explainRelation(relationCollection: RelationCollection) 
 	});
 	return explainedCollection;
 }
+
+export function mapRelationToJson(explainedCollection: ExplainedRelation) {
+	const result: string[] = []
+	result.push('{');
+	explainedCollection.forEach((map, key) => {
+		result.push(`"${key}":{`);
+		map.forEach((val, key) => {
+			result.push(`"${key}":[${val}]`, ',');
+		});
+		result.pop();
+		result.push('}', ',');
+	})
+	result.pop();
+	result.push('}');
+	return result.join('');
+}
