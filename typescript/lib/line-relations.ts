@@ -54,17 +54,15 @@ export default function explainRelation(relationCollection: RelationCollection) 
 }
 
 export function mapRelationToJson(explainedCollection: ExplainedRelation) {
-	const result: string[] = []
-	result.push('{');
+	const result: number[][][] = [[]];
 	explainedCollection.forEach((map, key) => {
-		result.push(`"${key}":{`);
-		map.forEach((val, key) => {
-			result.push(`"${key}":[${val}]`, ',');
-		});
-		result.pop();
-		result.push('}', ',');
+		const arr: number[][] = [];
+		map.forEach((val, key) => arr[key] = val);
+		for (let i = 0; i < arr.length; ++i) {
+			if (arr[i]) break;
+			arr[i] = [];
+		}
+		result.push(arr);
 	})
-	result.pop();
-	result.push('}');
-	return result.join('');
+	return JSON.stringify(result);
 }
