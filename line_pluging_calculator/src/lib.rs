@@ -35,7 +35,7 @@ impl Calculator {
             banned_position,
             position_now,
             size: Size { bottom: 0, top: 0 },
-            min_height: 10,
+            min_height: 11,
             results: vec![],
         }
     }
