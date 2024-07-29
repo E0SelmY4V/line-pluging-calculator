@@ -19,3 +19,14 @@
 ## 使用体验
 
 挺神奇的，不过 27 条线算了一个多小时，感觉还是有点慢了。
+
+## 使用前后对比
+
+### Before
+
+![杂乱不堪](https://cdn.luogu.com.cn/upload/image_hosting/36bitzvl.png)
+
+### After
+
+![利索整洁](https://cdn.luogu.com.cn/upload/image_hosting/dtk6ejwj.png)
+
