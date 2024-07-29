@@ -1,4 +1,6 @@
-use std::collections::{HashMap, HashSet};
+use std::
+    collections::{HashMap, HashSet}
+;
 
 use read_json::Relation;
 
@@ -10,7 +12,7 @@ struct Size {
     bottom: i16,
 }
 pub struct Calculator {
-    relation: Relation,
+    pub relation: Relation,
     max: i16,
     banned_position: HashMap<i16, HashSet<i16>>,
     position_now: HashMap<i16, i16>,
@@ -32,11 +34,8 @@ impl Calculator {
             max,
             banned_position,
             position_now,
-            size: Size {
-                bottom: 0,
-                top: 0,
-            },
-            min_height: 32767,
+            size: Size { bottom: 0, top: 0 },
+            min_height: 10,
             results: vec![],
         }
     }
@@ -50,7 +49,9 @@ impl Calculator {
                 self.min_height = height;
                 self.results.clear();
             }
-            self.results.push(self.position_now.clone());
+            let result = self.position_now.clone();
+            println!("{:#?}", result);
+            self.results.push(result);
             println!("算出一种高度为 {} 的解法", height);
             return;
         }
@@ -59,10 +60,13 @@ impl Calculator {
         let old_size = self.size;
         let relation_mine = self.relation.get(&line_now).unwrap();
         for (line, banned) in relation_mine.iter() {
-            if banned.len() != 0 {
-                self.banned_position.entry(*line).and_modify(
-                    |set: &mut HashSet<i16>| set.extend(old_banned_position.get(line).unwrap()));
+            let mut diffed_banned = HashSet::new();
+            for ban_line in banned {
+                diffed_banned.insert(ban_line + self.position_now.get(&line_now).unwrap());
             }
+            self.banned_position
+                .entry(*line)
+                .and_modify(|set: &mut HashSet<i16>| set.extend(diffed_banned));
         }
         for i in self.size.top - self.max + 1..self.size.bottom {
             if self.banned_position.get(&line_do).unwrap().contains(&i) {

@@ -1,8 +1,14 @@
-use line_pluging_calculator::read_json;
-
+use line_pluging_calculator::{read_json, Calculator};
 
 fn main() {
-	let data = read_json::get();
-	print!("{:#?}", data);
-	return ();
+    calc();
+}
+
+fn calc() {
+    let relation = read_json::get();
+    let mut calculator = Calculator::new(relation);
+    // println!("{:#?}", calculator.relation);
+    calculator.run(1);
+    println!("{:#?}", calculator.results);
+    return ();
 }
